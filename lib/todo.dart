@@ -9,7 +9,7 @@ class TodoBox extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.blue),
       width: double.infinity,
       height: 100,
-      child: Text("j"),
+      child: Text(controller.text),
     );
   }
 }
