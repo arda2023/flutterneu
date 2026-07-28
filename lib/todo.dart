@@ -6,11 +6,14 @@ class TodoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.blue),
-      width: double.infinity,
-      height: 100,
-      child: Text(""),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        decoration: BoxDecoration(color: Colors.blue),
+        width: double.infinity,
+        height: 100,
+        child: Text(text),
+      ),
     );
   }
 }

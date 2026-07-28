@@ -9,7 +9,6 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todos = ref.watch(todoNProvider);
-    todos.map((einString) => Text(einString)).toList();
     final controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
@@ -28,12 +27,21 @@ class HomeScreen extends ConsumerWidget {
                       decoration: InputDecoration(hintText: "Schreibe was"),
                       controller: controller,
                     ),
-                    ElevatedButton(onPressed: () {}, child: Text("Hinzufügen")),
+                    ElevatedButton(
+                      onPressed: () {
+                        ref
+                            .read(todoNProvider.notifier)
+                            .addTodo(controller.text);
+                        controller.clear();
+                      },
+                      child: Text("Hinzufügen"),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              TodoBox(text: controller.text),
+              SizedBox(height: 10),
+
+              ...todos.map((einString) => TodoBox(text: einString)),
             ],
           ),
         ),
