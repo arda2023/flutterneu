@@ -8,7 +8,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todos = ref.watch(todoNProvider);
+    final asyncTodos = ref.watch(todoNProvider);
     final controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
@@ -41,12 +41,22 @@ class HomeScreen extends ConsumerWidget {
               ),
               SizedBox(height: 10),
 
-              ...todos.map(
-                (einString) => TodoBox(
-                  text: einString,
-                  onDeleted: () =>
-                      ref.read(todoNProvider.notifier).removeTodo(einString),
+              asyncTodos.when(
+                data: (todos) => Column(
+                  children: [
+                    ...todos.map(
+                      (einString) => TodoBox(
+                        text: einString,
+
+                        onDeleted: () => ref
+                            .read(todoNProvider.notifier)
+                            .removeTodo(einString),
+                      ),
+                    ),
+                  ],
                 ),
+                error: (err, stack) => Text("Fehler"),
+                loading: () => Text("Lädt"),
               ),
             ],
           ),

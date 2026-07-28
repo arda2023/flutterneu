@@ -5,13 +5,19 @@ part 'todo_notifier.g.dart';
 @riverpod
 class TodoN extends _$TodoN {
   @override
-  List<String> build() => [];
+  Future<List<String>> build() async {
+    await Future.delayed(Duration(seconds: 2));
+    return [];
+  }
+
   void addTodo(String text) {
-    state = [...state, text];
+    final currentList = state.value ?? [];
+    state = AsyncValue.data([...currentList, text]);
   }
 
   void removeTodo(String text) {
-    state = state.where((item) => item != text).toList();
-    print(text);
+    final liste = state.value ?? [];
+    final gefiltert = liste.where((item) => item != text).toList();
+    state = AsyncValue.data(gefiltert);
   }
 }

@@ -16,7 +16,7 @@ class TodoBox extends StatelessWidget {
         child: Row(
           children: [
             Text(text),
-            IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+            IconButton(onPressed: onDeleted, icon: Icon(Icons.delete)),
           ],
         ),
       ),
