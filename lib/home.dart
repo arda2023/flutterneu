@@ -41,7 +41,13 @@ class HomeScreen extends ConsumerWidget {
               ),
               SizedBox(height: 10),
 
-              ...todos.map((einString) => TodoBox(text: einString)),
+              ...todos.map(
+                (einString) => TodoBox(
+                  text: einString,
+                  onDeleted: () =>
+                      ref.read(todoNProvider.notifier).removeTodo(einString),
+                ),
+              ),
             ],
           ),
         ),

@@ -40,7 +40,7 @@ final class TodoNProvider extends $NotifierProvider<TodoN, List<String>> {
   }
 }
 
-String _$todoNHash() => r'9c2f00406f3a059050efc6410bc7fb31858b46c6';
+String _$todoNHash() => r'cf98f4bdf6d44a844d1b822ba2eee68e70b5a156';
 
 abstract class _$TodoN extends $Notifier<List<String>> {
   List<String> build();

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class TodoBox extends StatelessWidget {
   final String text;
-  const TodoBox({super.key, required this.text});
+  final VoidCallback onDeleted;
+  const TodoBox({super.key, required this.text, required this.onDeleted});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,12 @@ class TodoBox extends StatelessWidget {
         decoration: BoxDecoration(color: Colors.blue),
         width: double.infinity,
         height: 100,
-        child: Text(text),
+        child: Row(
+          children: [
+            Text(text),
+            IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+          ],
+        ),
       ),
     );
   }
