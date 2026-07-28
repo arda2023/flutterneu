@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TodoBox extends StatelessWidget {
-  const TodoBox({super.key});
+  final String text;
+  const TodoBox({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +10,7 @@ class TodoBox extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.blue),
       width: double.infinity,
       height: 100,
-      child: Text(controller.text),
+      child: Text(""),
     );
   }
 }

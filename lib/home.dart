@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterneu/todo.dart';
+import 'package:flutterneu/todo_notifier.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final todos = ref.watch(todoNProvider);
+    todos.map((einString) => Text(einString)).toList();
     final controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
@@ -25,16 +28,12 @@ class HomeScreen extends ConsumerWidget {
                       decoration: InputDecoration(hintText: "Schreibe was"),
                       controller: controller,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        TodoBox();
-                      },
-                      child: Text("Hinzufügen"),
-                    ),
+                    ElevatedButton(onPressed: () {}, child: Text("Hinzufügen")),
                   ],
                 ),
               ),
               SizedBox(height: 20),
+              TodoBox(text: controller.text),
             ],
           ),
         ),
