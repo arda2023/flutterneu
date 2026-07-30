@@ -6,7 +6,7 @@ part 'todo_notifier.g.dart';
 class TodoN extends _$TodoN {
   @override
   Future<List<String>> build() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 2));
     return [];
   }
 
@@ -19,5 +19,10 @@ class TodoN extends _$TodoN {
     final liste = state.value ?? [];
     final gefiltert = liste.where((item) => item != text).toList();
     state = AsyncValue.data(gefiltert);
+  }
+
+  void restoreAll(List<String> items) {
+    final List<String> currentList = state.value ?? [];
+    state = AsyncValue.data([...currentList, ...items]);
   }
 }

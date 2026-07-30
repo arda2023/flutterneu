@@ -11,6 +11,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncTodos = ref.watch(todoNProvider);
     final controller = TextEditingController();
+    final List<DeletedTodo> deletedList = ref.watch(deletedProvider);
     ref.watch(deletedProvider);
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
@@ -51,16 +52,19 @@ class HomeScreen extends ConsumerWidget {
                         text: einString,
 
                         onDeleted: () {
+                      var gefiltert = deletedList.where(( ref.read(deletedProvider);))
+
                           ref
                               .read(todoNProvider.notifier)
                               .removeTodo(einString);
 
                           ref.read(deletedProvider.notifier).add(einString);
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Row(
                                 children: [
-                                  Text("Anzahl"),
+                                  Text("${ref.read(deletedProvider).length}"),
                                   Text("ToDo gelöscht"),
                                 ],
                               ),

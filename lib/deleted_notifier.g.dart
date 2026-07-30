@@ -12,7 +12,8 @@ part of 'deleted_notifier.dart';
 @ProviderFor(Deleted)
 final deletedProvider = DeletedProvider._();
 
-final class DeletedProvider extends $NotifierProvider<Deleted, List<String>> {
+final class DeletedProvider
+    extends $NotifierProvider<Deleted, List<DeletedTodo>> {
   DeletedProvider._()
     : super(
         from: null,
@@ -32,27 +33,27 @@ final class DeletedProvider extends $NotifierProvider<Deleted, List<String>> {
   Deleted create() => Deleted();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<String> value) {
+  Override overrideWithValue(List<DeletedTodo> value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<List<String>>(value),
+      providerOverride: $SyncValueProvider<List<DeletedTodo>>(value),
     );
   }
 }
 
-String _$deletedHash() => r'b8708a11db494293644057d7e9762507946bc7a1';
+String _$deletedHash() => r'd84122958f10fc16990c4a8a25677feb7f6bf1a6';
 
-abstract class _$Deleted extends $Notifier<List<String>> {
-  List<String> build();
+abstract class _$Deleted extends $Notifier<List<DeletedTodo>> {
+  List<DeletedTodo> build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<List<String>, List<String>>;
+    final ref = this.ref as $Ref<List<DeletedTodo>, List<DeletedTodo>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<String>, List<String>>,
-              List<String>,
+              AnyNotifier<List<DeletedTodo>, List<DeletedTodo>>,
+              List<DeletedTodo>,
               Object?,
               Object?
             >;
