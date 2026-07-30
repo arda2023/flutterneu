@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterneu/deleted_notifier.dart';
 import 'package:flutterneu/todo.dart';
 import 'package:flutterneu/todo_notifier.dart';
 
@@ -10,6 +11,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncTodos = ref.watch(todoNProvider);
     final controller = TextEditingController();
+    ref.watch(deletedProvider);
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
       body: SafeArea(
@@ -48,9 +50,39 @@ class HomeScreen extends ConsumerWidget {
                       (einString) => TodoBox(
                         text: einString,
 
-                        onDeleted: () => ref
-                            .read(todoNProvider.notifier)
-                            .removeTodo(einString),
+                        onDeleted: () {
+                          ref
+                              .read(todoNProvider.notifier)
+                              .removeTodo(einString);
+
+                          ref.read(deletedProvider.notifier).add(einString);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Row(
+                                children: [
+                                  Text("Anzahl"),
+                                  Text("ToDo gelöscht"),
+                                ],
+                              ),
+                              duration: Duration(seconds: 3),
+                              width: 280,
+                              padding: .symmetric(horizontal: 8),
+                              action: SnackBarAction(
+                                label: "Wiederherstellen",
+                                onPressed: () {
+                                  ref
+                                      .read(todoNProvider.notifier)
+                                      .addTodo(einString);
+                                  ref.read(deletedProvider).remove(einString);
+                                },
+                              ),
+                              behavior: .floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: .circular(10),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

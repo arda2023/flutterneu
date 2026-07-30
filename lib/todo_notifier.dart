@@ -6,7 +6,7 @@ part 'todo_notifier.g.dart';
 class TodoN extends _$TodoN {
   @override
   Future<List<String>> build() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 5));
     return [];
   }
 

@@ -32,7 +32,7 @@ final class TodoNProvider extends $AsyncNotifierProvider<TodoN, List<String>> {
   TodoN create() => TodoN();
 }
 
-String _$todoNHash() => r'a356dfcc1d29a4fac017c2e49a9e986e7b4eb2b7';
+String _$todoNHash() => r'd9fdbe2cabcee2e4b3ca804aa476528bcb241423';
 
 abstract class _$TodoN extends $AsyncNotifier<List<String>> {
   FutureOr<List<String>> build();
