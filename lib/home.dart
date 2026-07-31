@@ -13,6 +13,7 @@ class HomeScreen extends ConsumerWidget {
     final controller = TextEditingController();
     final List<DeletedTodo> deletedList = ref.watch(deletedProvider);
     ref.watch(deletedProvider);
+
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
       body: SafeArea(
@@ -52,8 +53,6 @@ class HomeScreen extends ConsumerWidget {
                         text: einString,
 
                         onDeleted: () {
-                      var gefiltert = deletedList.where(( ref.read(deletedProvider);))
-
                           ref
                               .read(todoNProvider.notifier)
                               .removeTodo(einString);
@@ -75,9 +74,8 @@ class HomeScreen extends ConsumerWidget {
                                 label: "Wiederherstellen",
                                 onPressed: () {
                                   ref
-                                      .read(todoNProvider.notifier)
-                                      .addTodo(einString);
-                                  ref.read(deletedProvider).remove(einString);
+                                      .read(deletedProvider.notifier)
+                                      .restoreAll();
                                 },
                               ),
                               behavior: .floating,

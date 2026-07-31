@@ -1,3 +1,4 @@
+import 'package:flutterneu/todo_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'deleted_notifier.g.dart';
@@ -14,13 +15,29 @@ class Deleted extends _$Deleted {
   List<DeletedTodo> build() => [];
 
   void add(String text) {
-    final now = DeletedTodo(deletedAt: DateTime.now(), text: text);
-    state = [...state, now];
+    removeExpired();
+    var o = DeletedTodo(deletedAt: DateTime.now(), text: text);
+    state = [...state, o];
   }
 
   void remove(String text) {
     state = state.where((item) {
-      return item != text;
+      return item.text != text;
     }).toList();
+  }
+
+  void removeExpired() {
+    state = state
+        .where(
+          (item) => DateTime.now().difference(item.deletedAt).inSeconds < 10,
+        )
+        .toList();
+  }
+
+  void restoreAll() {
+    for (var a in state) {
+      ref.read(todoNProvider.notifier).addTodo(a.text);
+    }
+    state = [];
   }
 }

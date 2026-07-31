@@ -41,7 +41,7 @@ final class DeletedProvider
   }
 }
 
-String _$deletedHash() => r'd84122958f10fc16990c4a8a25677feb7f6bf1a6';
+String _$deletedHash() => r'f48df6aadaf8a945a0a3beeb87ecfb9a5dafd61c';
 
 abstract class _$Deleted extends $Notifier<List<DeletedTodo>> {
   List<DeletedTodo> build();
