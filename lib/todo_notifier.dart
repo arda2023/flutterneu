@@ -20,9 +20,4 @@ class TodoN extends _$TodoN {
     final gefiltert = liste.where((item) => item != text).toList();
     state = AsyncValue.data(gefiltert);
   }
-
-  void restoreAll(List<String> items) {
-    final List<String> currentList = state.value ?? [];
-    state = AsyncValue.data([...currentList, ...items]);
-  }
 }

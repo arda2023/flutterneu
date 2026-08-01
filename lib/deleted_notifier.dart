@@ -7,6 +7,8 @@ class DeletedTodo {
   final String text;
   final DateTime deletedAt;
   const DeletedTodo({required this.deletedAt, required this.text});
+  @override
+  String toString() => 'DeletedTodo(text: $text, deletedAt: $deletedAt)';
 }
 
 @riverpod

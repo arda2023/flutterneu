@@ -12,7 +12,7 @@ class HomeScreen extends ConsumerWidget {
     final asyncTodos = ref.watch(todoNProvider);
     final controller = TextEditingController();
     final List<DeletedTodo> deletedList = ref.watch(deletedProvider);
-    ref.watch(deletedProvider);
+    print('Deleted: $deletedList');
 
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
