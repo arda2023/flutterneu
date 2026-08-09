@@ -25,7 +25,15 @@ class _OnboardingState extends State<Onboarding> {
         children: [
           // 1. Hintergrund-Video (liegt ganz unten im Stack)
           const _OnboardingVideoPage(),
-
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft,
+                colors: [Colors.black, Colors.black.withValues(alpha: 0.3)],
+              ),
+            ),
+          ),
           // 2. Wischbare Seiten
           SafeArea(
             child: PageView(
