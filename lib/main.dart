@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterneu/onboarding1.dart';
+import 'package:flutterneu/onboarding.dart';
+
+import 'app_theme.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -11,6 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Onboarding1());
+    return MaterialApp(theme: AppTheme.lightTheme, home: Onboarding());
   }
 }
