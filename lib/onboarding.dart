@@ -6,11 +6,12 @@ class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
 
   @override
-  _OnboardingState createState() => _OnboardingState();
+  State<Onboarding> createState() => _OnboardingState();
 }
 
 class _OnboardingState extends State<Onboarding> {
   final PageController _controller = PageController();
+
   @override
   void dispose() {
     _controller.dispose();
@@ -22,52 +23,65 @@ class _OnboardingState extends State<Onboarding> {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: _controller,
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Text("1", style: Theme.of(context).textTheme.displayMedium),
-                    Text(
+          // 1. Hintergrund-Video (liegt ganz unten im Stack)
+          const _OnboardingVideoPage(),
+
+          // 2. Wischbare Seiten
+          SafeArea(
+            child: PageView(
+              controller: _controller,
+              children: [
+                // Seite 1
+                _OnboardingStep(
+                  title: "Cooking Made Easy",
+                  description:
                       "This will help us customize the recipe feed to your preferences",
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                  ],
+                  buttonText: "Jetzt loslegen",
+                  onButtonPressed: () {
+                    _controller.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
                 ),
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    Text("2", style: Theme.of(context).textTheme.displayMedium),
-                    Text(
-                      "This will help us customize the recipe feed to your preferences",
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                  ],
+                // Seite 2
+                _OnboardingStep(
+                  title: "Finde Rezepte",
+                  description:
+                      "Entdecke Tausende Rezepte basierend auf deinen Zutaten.",
+                  buttonText: "Loslegen",
+                  onButtonPressed: () {
+                    // Navigator.push(...) zum Home-Screen
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+
+          // 3. Indicator schwebt unten über allem
           Align(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: SmoothPageIndicator(
-                controller: _controller, // PageController
-                count: 2,
-                effect: WormEffect(
-                  spacing: 20,
-                  dotColor: Colors.grey.shade300,
-                  activeDotColor: Theme.of(context).colorScheme.primary,
-                ), // your preferred effect
-                onDotClicked: (index) {
-                  _controller.animateToPage(
-                    index,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 90,
+                ), // Platz für den Button lassen
+                child: SmoothPageIndicator(
+                  controller: _controller,
+                  count: 2,
+                  effect: WormEffect(
+                    spacing: 16,
+                    dotColor: Colors.white38,
+                    activeDotColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  onDotClicked: (index) {
+                    _controller.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -77,6 +91,62 @@ class _OnboardingState extends State<Onboarding> {
   }
 }
 
+// =======================================================
+// CLEAN CODE: Wiederverwendbares Widget für Onboarding-Seiten
+// =======================================================
+class _OnboardingStep extends StatelessWidget {
+  final String title;
+  final String description;
+  final String buttonText;
+  final VoidCallback onButtonPressed;
+
+  const _OnboardingStep({
+    required this.title,
+    required this.description,
+    required this.buttonText,
+    required this.onButtonPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Padding(
+      // EIN zentrales Padding für den gesamten Bildschirminhalt!
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      child: Column(
+        children: [
+          const SizedBox(height: 50), // Abstand nach oben
+          // Titel
+          Text(
+            title,
+            style: textTheme.displayMedium?.copyWith(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+
+          const SizedBox(height: 16), // Sauberer Abstand zwischen Texten
+          // Beschreibung
+          Text(
+            description,
+            style: textTheme.titleMedium?.copyWith(
+              color:
+                  Colors.white70, // Saubere Flutter-Standardfarbe für 70% Weiß
+            ),
+            textAlign: TextAlign.center,
+          ),
+
+          const Spacer(), // Drückt den Button automatisch ganz nach unten!
+          // Button übernimmt jetzt perfekt die volle Breite aus deinem AppTheme!
+          ElevatedButton(onPressed: onButtonPressed, child: Text(buttonText)),
+        ],
+      ),
+    );
+  }
+}
+
+// =======================================================
+// VIDEO-HINTERGRUND (Kapselt auch das dunkle Overlay!)
+// =======================================================
 class _OnboardingVideoPage extends StatefulWidget {
   const _OnboardingVideoPage();
 
@@ -90,14 +160,13 @@ class _OnboardingVideoPageState extends State<_OnboardingVideoPage> {
   @override
   void initState() {
     super.initState();
-    _videoController =
-        VideoPlayerController.asset('assets/videos/bgvideo25fps.mp4')
-          ..setVolume(0.0)
-          ..setLooping(true)
-          ..initialize().then((_) {
-            _videoController.play();
-            setState(() {});
-          });
+    _videoController = VideoPlayerController.asset('assets/bgvideo25fps.mp4')
+      ..setVolume(0.0)
+      ..setLooping(true)
+      ..initialize().then((_) {
+        _videoController.play();
+        setState(() {});
+      });
   }
 
   @override
@@ -110,7 +179,6 @@ class _OnboardingVideoPageState extends State<_OnboardingVideoPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Video-Hintergrund
         if (_videoController.value.isInitialized)
           SizedBox.expand(
             child: FittedBox(
@@ -125,15 +193,8 @@ class _OnboardingVideoPageState extends State<_OnboardingVideoPage> {
         else
           Container(color: Colors.black),
 
-        // Text & Inhalt über dem Video
-        Center(
-          child: Text(
-            "Willkommen!",
-            style: Theme.of(
-              context,
-            ).textTheme.displayMedium?.copyWith(color: Colors.white),
-          ),
-        ),
+        // Das dunkle Overlay gehört DIREKT zum Video-Hintergrund!
+        Container(color: Colors.black.withValues(alpha: 0.5)),
       ],
     );
   }

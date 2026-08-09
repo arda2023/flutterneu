@@ -2,64 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // --- 1. FARBPALETTE AUS DEM BILD ---
-  // Das frische Smaragdgrün von den Buttons ("Get Started", "onion", etc.)
-  static const Color primaryGreen = Color(0xFF0FAF6B);
+  // --- 1. FARBPALETTE FÜR DARK MODE ---
+  // Ein etwas leuchtenderes Grün, damit es auf dunklem Grund perfekt knallt
+  static const Color primaryGreen = Color(0xFF10B981);
 
-  // Das warme Gold/Gelb (z.B. "Recipe of the day" Karte / Rating Sterne)
-  static const Color accentGold = Color(0xFFE2B93B);
+  // Akzent-Gold für Sterne/Highlights
+  static const Color accentGold = Color(0xFFF59E0B);
 
-  // Der fast weiße, leicht gräulich-warme Hintergrund
-  static const Color backgroundLight = Color(0xFFF9FAFB);
+  // Tiefer, edler dunkler Hintergrund (nicht ganz reines Schwarz, schont die Augen)
+  static const Color backgroundDark = Color(0xFF12181F);
 
-  // Sehr helles Grau für Buttons/Chips (z.B. "chicken", "fish", "Noodle")
-  static const Color surfaceLight = Color(0xFFF3F4F6);
+  // Karten, Chips & Eingabefelder ("chicken", "Noodle" etc.) heben sich leicht ab
+  static const Color surfaceDark = Color(0xFF1E2630);
 
-  // Dunkler Text
-  static const Color textDark = Color(0xFF1D242B);
+  // Haupt-Textfarbe (Weiß mit minimaler Wärme für bessere Lesbarkeit)
+  static const Color textLight = Color(0xFFF9FAFB);
 
-  // Ausgegrauter Text (z.B. Untertitel, Zeitangaben "90 min")
-  static const Color textMuted = Color(0xFF8C98A4);
-
-  // --- 2. THEME DEFINITION ---
-  static ThemeData get lightTheme {
-    // Basis TextTheme von Google Fonts laden (dmSans)
-    final baseTextTheme = GoogleFonts.dmSansTextTheme();
+  // Ausgegrauter Text für Untertitel/Zeitangaben ("90 min")
+  static const Color textMuted = Color(0xFF9CA3AF);
+  static const Color customGrey = Color(0xFF6B7280);
+  // --- 2. DARK THEME DEFINITION ---
+  static ThemeData get darkTheme {
+    // Basis-TextTheme für dunkle Hintergründe laden
+    final baseTextTheme = GoogleFonts.dmSansTextTheme(
+      ThemeData.dark().textTheme,
+    );
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: backgroundLight,
+      brightness: Brightness.dark, // Sagt Flutter: Hier gilt Darkmode!
+      scaffoldBackgroundColor: backgroundDark,
 
       // Farb-System
-      colorScheme: const ColorScheme.light(
+      colorScheme: const ColorScheme.dark(
         primary: primaryGreen,
         secondary: accentGold,
-        surface: surfaceLight,
+        surface: surfaceDark,
         onPrimary: Colors.white,
-        onSurface: textDark,
+        onSurface: textLight, // Textfarbe auf Oberflächen (Karten, Screens)
       ),
 
-      // --- TYPOGRAFIE (Google Fonts DM Sans) ---
+      // --- TYPOGRAFIE (Google Fonts DM Sans in Hell) ---
       textTheme: baseTextTheme.copyWith(
-        // Große Headlines (z.B. "Select the foods you don't eat")
+        // Große Headlines
         displayMedium: baseTextTheme.displayMedium?.copyWith(
-          fontSize: 26,
+          fontSize: 34,
           fontWeight: FontWeight.bold,
-          color: textDark,
+          color: textLight,
         ),
-        // Titel von Karten/Rezepten (z.B. "Pumpkin ginger curry soup")
+        // Titel von Karten/Rezepten
         titleMedium: baseTextTheme.titleMedium?.copyWith(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: textDark,
+          color: textLight,
         ),
         // Standard-Fließtext
         bodyMedium: baseTextTheme.bodyMedium?.copyWith(
           fontSize: 14,
-          color: textDark,
+          color: textLight,
         ),
-        // Nebentext / Grauer Text (z.B. "This will help us...")
+        // Nebentext / Grauer Text
         bodySmall: baseTextTheme.bodySmall?.copyWith(
           fontSize: 12,
           color: textMuted,
@@ -67,18 +69,14 @@ class AppTheme {
       ),
 
       // --- BUTTON STYLES ---
-      // Stylt z.B. deinen "Get Started" Button automatisch richtig
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryGreen,
           foregroundColor: Colors.white,
-          elevation: 0, // Flat Design wie im Bild
-          minimumSize: const Size(
-            double.infinity,
-            52,
-          ), // Schöner breiter Button
+          elevation: 0,
+          minimumSize: const Size(double.infinity, 52),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16), // Abgerundete Ecken
+            borderRadius: BorderRadius.circular(16),
           ),
           textStyle: GoogleFonts.dmSans(
             fontSize: 16,
@@ -87,13 +85,16 @@ class AppTheme {
         ),
       ),
 
-      // --- CHIP STYLES (für die Kategorien "chicken", "Noodle" etc.) ---
+      // --- CHIP STYLES (Kategorien "chicken", "Noodle" etc.) ---
       chipTheme: ChipThemeData(
-        backgroundColor: surfaceLight,
+        backgroundColor: surfaceDark, // Dunkle Chip-Hintergründe
         selectedColor: primaryGreen,
         side: BorderSide.none,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        labelStyle: GoogleFonts.dmSans(color: textDark, fontSize: 14),
+        labelStyle: GoogleFonts.dmSans(
+          color: textLight, // Helle Schrift auf den Chips
+          fontSize: 14,
+        ),
       ),
     );
   }
