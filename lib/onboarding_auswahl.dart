@@ -10,6 +10,27 @@ class Auswahl extends StatefulWidget {
 class _AuswahlState extends State<Auswahl> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: null);
+    final colorSheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(child: Kasten());
+  }
+}
+
+class Kasten extends StatelessWidget {
+  const Kasten({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorSheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(color: colorSheme.onPrimary),
+      child: Text(
+        "onion",
+        style: textTheme.displaySmall?.copyWith(color: colorSheme.surface),
+      ),
+    );
   }
 }

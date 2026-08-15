@@ -49,21 +49,26 @@ class AppTheme {
           fontSize: 34,
           fontWeight: FontWeight.bold,
           color: textLight,
+        ), // Anderes
+        displaySmall: baseTextTheme.displaySmall?.copyWith(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: textLight,
         ),
         // Titel von Karten/Rezepten
         titleMedium: baseTextTheme.titleMedium?.copyWith(
-          fontSize: 16,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
           color: textLight,
         ),
         // Standard-Fließtext
         bodyMedium: baseTextTheme.bodyMedium?.copyWith(
-          fontSize: 14,
+          fontSize: 16,
           color: textLight,
         ),
         // Nebentext / Grauer Text
         bodySmall: baseTextTheme.bodySmall?.copyWith(
-          fontSize: 12,
+          fontSize: 14,
           color: textMuted,
         ),
       ),
