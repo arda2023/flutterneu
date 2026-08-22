@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 
@@ -42,6 +44,25 @@ class _AddTransactionState extends State<AddTransaction> {
   // eine normale Variable würde dabei jedes Mal auf ihren Startwert
   // zurückgesetzt. Nur `State`-Felder überleben zwischen Rebuilds.
   Category? _selectedCategory;
+  DateTime? _selectedDate; // <-- NEU: das hat gefehlt (Fehler 2)
+  late final TextEditingController _textcontroller;
+  late final TextEditingController _amountcontroller;
+  @override
+  void initState() {
+    super.initState();
+    _amountcontroller = TextEditingController();
+    _textcontroller = TextEditingController(
+      text: "Standard-Titel",
+    ); // Optional mit Initialwert
+  }
+
+  @override
+  void dispose() {
+    // 2. WICHTIG: Speicher freigeben
+    _amountcontroller.dispose();
+    _textcontroller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +84,15 @@ class _AddTransactionState extends State<AddTransaction> {
                 calendar: const FDateFieldGridSplitCalendarProperties(),
                 label: const Text('Date'),
                 description: const Text('Select a date for this transaction'),
-                onChange: (DateTime? date) {
-                  // Hier erhältst du das ausgewählte Datum
-                  if (date != null) {
-                    setState(() {
-                      _selectedDate = date;
-                    });
-                  }
-                },
+                selectionControl: FDateSelectionControl.managedSingle(
+                  onChange: (DateTime? date) {
+                    if (date != null) {
+                      setState(() {
+                        _selectedDate = date;
+                      });
+                    }
+                  },
+                ),
               ),
               TextField(
                 keyboardType: const TextInputType.numberWithOptions(
@@ -80,9 +102,11 @@ class _AddTransactionState extends State<AddTransaction> {
                   border: OutlineInputBorder(),
                   labelText: 'Name',
                 ),
+                controller: _textcontroller,
               ),
               SizedBox(height: 20),
               TextField(
+                controller: _amountcontroller,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
@@ -150,6 +174,13 @@ class _AddTransactionState extends State<AddTransaction> {
                   // Row(children: ...) braucht aber konkret eine List<Widget>
                   // -> deshalb .toList() am Ende.
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  String textfiltered = _textcontroller.text;
+                  double amountfiltered = double.parse(_amountcontroller.text);
+                },
+                child: Text("data"),
               ),
             ],
           ),
