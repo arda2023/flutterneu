@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'transaction_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TransactionList extends _$TransactionList {
   @override
   List<TBox> build() {

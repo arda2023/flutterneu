@@ -20,7 +20,7 @@ final class TransactionListProvider
         argument: null,
         retry: null,
         name: r'transactionListProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -41,7 +41,7 @@ final class TransactionListProvider
   }
 }
 
-String _$transactionListHash() => r'f1202c39919649fbca84512309d5b800da7dcedd';
+String _$transactionListHash() => r'196d0df663b9a9d1e893736cb5beb9a2285afdc9';
 
 abstract class _$TransactionList extends $Notifier<List<TBox>> {
   List<TBox> build();

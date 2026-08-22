@@ -44,7 +44,7 @@ class Transactions extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: ListView.separated(
-            itemCount: tboxlist.length,
+            itemCount: transactions.length,
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final item = transactions[index];

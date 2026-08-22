@@ -2,7 +2,6 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterneu/home.dart';
 import 'package:flutterneu/transaction_provider.dart';
 import 'package:flutterneu/transactions.dart';
 import 'package:forui/forui.dart';
@@ -166,22 +165,40 @@ class _AddTransactionState extends ConsumerState<AddTransaction> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (_selectedCategory == null || _selectedDate == null) {
-                    return; // bricht die gesamte Funktion hier ab, nichts danach läuft mehr
-                  }
-                  ref.read(transactionListProvider.notifier);
-                  String textfiltered = _textcontroller.text;
-                  double amountfiltered = double.parse(_amountcontroller.text);
-                  String formatiertesDatum = _selectedDate.toString();
-                  final neueTransaktion = TBox(
-                    name: textfiltered,
-                    category: _selectedCategory!,
-                    date: formatiertesDatum,
-                    sum: amountfiltered,
+                  // 1. Sicheres Parsen des Betrags
+                  final parsedAmount = double.tryParse(
+                    _amountcontroller.text.replaceAll(',', '.'),
                   );
-                  Navigator.of(context).pop(Home());
+
+                  // 2. Datum & Kategorie prüfen (z. B. heutiges Datum als Fallback nutzen)
+                  final dateToUse = _selectedDate ?? DateTime.now();
+
+                  if (_selectedCategory == null ||
+                      parsedAmount == null ||
+                      _textcontroller.text.trim().isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Bitte alle Felder korrekt ausfüllen!'),
+                      ),
+                    );
+                    return;
+                  }
+
+                  final neueTransaktion = TBox(
+                    name: _textcontroller.text.trim(),
+                    category: _selectedCategory!,
+                    date:
+                        "${dateToUse.day}.${dateToUse.month}.${dateToUse.year}",
+                    sum: parsedAmount,
+                  );
+
+                  // 3. In Provider speichern & zurück navigieren
+                  ref
+                      .read(transactionListProvider.notifier)
+                      .addTransaction(neueTransaktion);
+                  Navigator.of(context).pop();
                 },
-                child: Text("data"),
+                child: const Text("Transaktion hinzufügen"),
               ),
             ],
           ),
