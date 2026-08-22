@@ -2,7 +2,9 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterneu/home.dart';
 import 'package:flutterneu/transaction_provider.dart';
+import 'package:flutterneu/transactions.dart';
 import 'package:forui/forui.dart';
 
 // ─────────────────────────────────────────────────────────────────
@@ -129,13 +131,7 @@ class _AddTransactionState extends ConsumerState<AddTransaction> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // ─────────────────────────────────────────────
-                  // HIER die eigentliche Verbesserung:
-                  // .map() erzeugt aus JEDEM Category-Objekt in der
-                  // Liste automatisch einen IconButton — egal ob die
-                  // Liste 4 oder 40 Einträge hat, der Code bleibt
-                  // gleich lang.
-                  // ─────────────────────────────────────────────
+
                   children: availableCategories.map((category) {
                     final bool isSelected = _selectedCategory == category;
 
@@ -143,10 +139,6 @@ class _AddTransactionState extends ConsumerState<AddTransaction> {
                       padding: const EdgeInsets.only(right: 15),
                       child: IconButton.outlined(
                         onPressed: () {
-                          // setState() sagt Flutter: "Zustand hat sich
-                          // geändert, bau build() bitte neu auf."
-                          // Ohne setState() würde sich zwar die Variable
-                          // ändern, aber die UI nichts davon merken.
                           setState(() {
                             _selectedCategory = category;
                           });
@@ -157,9 +149,6 @@ class _AddTransactionState extends ConsumerState<AddTransaction> {
                               ? theme.colorScheme.primary
                               : Colors.white,
                           side: BorderSide(
-                            // Genau deine gewünschte Logik:
-                            // ausgewählt -> primärfarben (blau),
-                            // nicht ausgewählt -> weiß
                             color: isSelected
                                 ? theme.colorScheme.primary
                                 : Colors.white,
@@ -172,16 +161,25 @@ class _AddTransactionState extends ConsumerState<AddTransaction> {
                         ),
                       ),
                     );
-                  }).toList(), // .map() liefert ein "Iterable" zurück,
-                  // Row(children: ...) braucht aber konkret eine List<Widget>
-                  // -> deshalb .toList() am Ende.
+                  }).toList(),
                 ),
               ),
               ElevatedButton(
                 onPressed: () {
+                  if (_selectedCategory == null || _selectedDate == null) {
+                    return; // bricht die gesamte Funktion hier ab, nichts danach läuft mehr
+                  }
                   ref.read(transactionListProvider.notifier);
                   String textfiltered = _textcontroller.text;
                   double amountfiltered = double.parse(_amountcontroller.text);
+                  String formatiertesDatum = _selectedDate.toString();
+                  final neueTransaktion = TBox(
+                    name: textfiltered,
+                    category: _selectedCategory!,
+                    date: formatiertesDatum,
+                    sum: amountfiltered,
+                  );
+                  Navigator.of(context).pop(Home());
                 },
                 child: Text("data"),
               ),

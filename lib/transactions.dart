@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterneu/add_transaction.dart';
+import 'package:flutterneu/transaction_provider.dart';
 
 class TBox {
   final String name;
@@ -30,6 +31,7 @@ class Transactions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final transactions = ref.watch(transactionListProvider);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -45,7 +47,7 @@ class Transactions extends ConsumerWidget {
             itemCount: tboxlist.length,
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
-              final item = tboxlist[index];
+              final item = transactions[index];
               return Box(transaction: item); // rendert die Kachel
             },
           ),
