@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterneu/onboarding.dart';
+import 'package:flutterneu/home.dart';
 
 import 'app_theme.dart';
 
@@ -13,6 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: AppTheme.darkTheme, home: OnboardingPages());
+    return MaterialApp(theme: AppTheme.darkTheme, home: Home());
   }
 }
