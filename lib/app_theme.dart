@@ -1,31 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// ═══════════════════════════════════════════════════════════════════════
-// WIE MAN DIESES THEME BENUTZT
-// ═══════════════════════════════════════════════════════════════════════
-//
-// SCHRITT 1 — Theme global registrieren (nur EINMAL, in main.dart):
-//
-//   void main() {
-//     runApp(const MyApp());
-//   }
-//
-//   class MyApp extends StatelessWidget {
-//     const MyApp({super.key});
-//
-//     @override
-//     Widget build(BuildContext context) {
-//       return MaterialApp(
-//         theme: AppTheme.darkTheme,   // <-- HIER wird das Theme "scharf gemacht"
-//         home: const HomeScreen(),
-//       );
-//     }
-//   }
-//
-// Ab diesem Punkt kennt JEDES Widget in der App das Theme automatisch,
-// du musst es NICHT in jede Datei importieren oder erneut zuweisen.
-//
 // SCHRITT 2 — Theme-Werte in einer beliebigen anderen Datei/Widget NUTZEN:
 //
 //   Man holt sich das aktuell aktive Theme über den `context`, den jedes
