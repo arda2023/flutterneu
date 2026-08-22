@@ -1,38 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterneu/home.dart';
-import 'package:forui/forui.dart';
+import 'package:flutterneu/screens/tabs.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'app_theme.dart';
+final theme = ThemeData(
+  useMaterial3: true,
+  colorScheme: ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    seedColor: const Color.fromARGB(255, 131, 57, 0),
+  ),
+  textTheme: GoogleFonts.latoTextTheme(),
+);
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: App()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: const [
-        FLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('de'),
-      ],
-      builder: (context, child) => FTheme(
-        data: FTheme.neutral.dark.touch,
-        child: child!,
-      ),
-      theme: AppTheme.darkTheme,
-      home: const Home(),
-    );
+    return MaterialApp(theme: theme, home: const TabsScreen());
   }
 }
-
