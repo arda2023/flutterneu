@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 // ─────────────────────────────────────────────────────────────────
 // KATEGORIE-MODELL
@@ -58,6 +59,29 @@ class _AddTransactionState extends State<AddTransaction> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              FDateField(
+                calendar: const FDateFieldGridSplitCalendarProperties(),
+                label: const Text('Date'),
+                description: const Text('Select a date for this transaction'),
+                onChange: (DateTime? date) {
+                  // Hier erhältst du das ausgewählte Datum
+                  if (date != null) {
+                    setState(() {
+                      _selectedDate = date;
+                    });
+                  }
+                },
+              ),
+              TextField(
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                ),
+              ),
+              SizedBox(height: 20),
               TextField(
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
