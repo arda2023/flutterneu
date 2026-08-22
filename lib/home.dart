@@ -8,16 +8,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true, // this is all you need
-
-        actions: [
-          Title(
-            color: Colors.white,
-            child: Text("Add Transaction", style: theme.textTheme.titleMedium),
-          ),
-        ],
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -36,6 +26,7 @@ class Home extends StatelessWidget {
                 "Mark",
                 style: theme.textTheme.displayMedium?.copyWith(fontSize: 42),
               ),
+              SizedBox(height: 50),
               TotalBalance(),
             ],
           ),

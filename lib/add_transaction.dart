@@ -47,6 +47,11 @@ class _AddTransactionState extends State<AddTransaction> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Add Transaction", style: theme.textTheme.titleMedium),
+        backgroundColor: Colors.transparent, // passt gut zum Dark-Theme
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
