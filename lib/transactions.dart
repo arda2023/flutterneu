@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterneu/add_transaction.dart';
 
 class TBox {
@@ -24,11 +25,11 @@ List<TBox> tboxlist = [
   ),
 ];
 
-class Transactions extends StatelessWidget {
+class Transactions extends ConsumerWidget {
   const Transactions({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Scaffold(

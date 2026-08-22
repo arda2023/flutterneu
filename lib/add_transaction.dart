@@ -1,6 +1,8 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterneu/transaction_provider.dart';
 import 'package:forui/forui.dart';
 
 // ─────────────────────────────────────────────────────────────────
@@ -28,14 +30,14 @@ const List<Category> availableCategories = [
   Category(label: "Clothes", icon: Icons.checkroom),
 ];
 
-class AddTransaction extends StatefulWidget {
+class AddTransaction extends ConsumerStatefulWidget {
   const AddTransaction({super.key});
 
   @override
-  State<AddTransaction> createState() => _AddTransactionState();
+  ConsumerState<AddTransaction> createState() => _AddTransactionState();
 }
 
-class _AddTransactionState extends State<AddTransaction> {
+class _AddTransactionState extends ConsumerState<AddTransaction> {
   // Hält fest, WELCHE Kategorie gerade ausgewählt ist.
   // null = noch keine Auswahl getroffen.
   //
@@ -177,6 +179,7 @@ class _AddTransactionState extends State<AddTransaction> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  ref.read(transactionListProvider.notifier);
                   String textfiltered = _textcontroller.text;
                   double amountfiltered = double.parse(_amountcontroller.text);
                 },
