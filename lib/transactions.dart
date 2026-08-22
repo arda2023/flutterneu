@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutterneu/add_transaction.dart';
 
 class TBox {
   final String name;
   final String date;
   final double sum;
-  final String category;
+  final Category category;
 
   const TBox({
     required this.name,
@@ -13,6 +14,15 @@ class TBox {
     required this.sum,
   });
 }
+
+List<TBox> tboxlist = [
+  TBox(
+    name: "Kino",
+    category: availableCategories[0],
+    date: "01.01.2026",
+    sum: -20.32,
+  ),
+];
 
 class Transactions extends StatelessWidget {
   const Transactions({super.key});
@@ -30,7 +40,14 @@ class Transactions extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Column(children: [Box()]),
+          child: ListView.separated(
+            itemCount: tboxlist.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final item = tboxlist[index];
+              return Box(transaction: item); // rendert die Kachel
+            },
+          ),
         ),
       ),
     );
@@ -38,19 +55,45 @@ class Transactions extends StatelessWidget {
 }
 
 class Box extends StatelessWidget {
-  const Box({super.key});
+  const Box({super.key, required this.transaction});
+
+  final TBox transaction;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       decoration: BoxDecoration(
         color: theme.colorScheme.primary,
         borderRadius: BorderRadius.circular(15),
       ),
       width: double.infinity,
       height: 100,
+      child: Row(
+        mainAxisAlignment: .spaceBetween,
+
+        children: [
+          Icon(transaction.category.icon, size: 40),
+          SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(transaction.name, style: theme.textTheme.titleMedium),
+                Text(transaction.date, style: theme.textTheme.bodyMedium),
+              ],
+            ),
+          ),
+          SizedBox(width: 20),
+          Text(
+            transaction.sum.toStringAsFixed(2),
+            style: theme.textTheme.titleMedium,
+          ),
+        ],
+      ),
     );
   }
 }
