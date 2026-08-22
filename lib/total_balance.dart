@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterneu/add_transaction.dart';
+import 'package:flutterneu/transactions.dart';
 
 class TotalBalance extends StatefulWidget {
   const TotalBalance({super.key});
@@ -46,7 +47,11 @@ class TotalBalanceState extends State<TotalBalance> {
             ),
             const SizedBox(width: 12),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Transactions()),
+                );
+              },
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size(0, 48),
                 foregroundColor: Colors.white,
